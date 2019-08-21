@@ -2,6 +2,29 @@
 ### Author
 Andrew Vaillancourt
 
+## Table of Contents
+- [Abstract](#abstract)
+- [1. Introduction](#1-introduction)
+- [2. Background](#2-background)
+  * [2.1 OpenMP sections pragma](#21-openmp-sections-pragma)
+  * [2.2 OpenMP tasks pragma](#22-openmp-tasks-pragma)
+- [3. Mergesort and Quicksort](#3-mergesort-and-quicksort)
+  * [3.1 Mergesort](#31-mergesort)
+- [4. Experimental Setup](#4-experimental-setup)
+  * [4.1 Implementation Discussion](#41-implementation-discussion)
+- [5. Results](#5-results)
+  * [5.1 Mergesort Results](#51-mergesort-results)
+  * [5.2 Quicksort Results](#52-quicksort-results)
+  * [5.3 Figures](#53-figures)
+- [6. Conclusion](#6-conclusion)
+- [7. Future Work](#7-future-work)
+- [9. References](#9-references)
+- [Code](#code)
+  * [Run](#run)
+  * [Scripts](#scripts)
+  * [Clean](#clean)
+    + [Other Codes](#other-codes)
+
 ## Abstract
   OpenMP is a well known application programming interface for exploiting structured parallelism in computationally heavy applications on shared memory systems. However, as applications become more complex, the need for exploiting unstructured and dynamic parallelism increases. Prior to OpenMP 3.0 this task-level parallelism was expressed using the section model. OpenMP 3.0 introduced the tasking model which promised a more natural way of exploiting and expressing irregular algorithms. This paper examines the performance, scalability, and expressiveness of the two models through the implementation of the well-understood divide-and-conquer sorting algorithms Mergesort and Quicksort. 
     
@@ -14,7 +37,7 @@ Andrew Vaillancourt
 ### 2.1 OpenMP `sections` pragma
   Prior to OpenMP 3.0, work-sharing, beyond simple loop level parallelism, was accomplished by using the sections construct. The sections pragma is a non-iterative work-sharing construct that contains a set of structured blocks that are to be distributed among and executed by the threads in a team [3]. Each structured block, declared using a sections pragma, is executed once by one of the threads in the team [3]. The OpenMP `sections` pragma is used in conjunction with the OpenMP section pragma to indicate static regions of computation that can be simultaneously executed on different threads of an OpenMP parallel region [4]. Each unit of independent work must be specified in a section pragma, immediately following a sections construct. This static method of specifying parallel sections at compile time limits the level of parallelism to that of the number of sections clauses contained within a sections region. The threads of a parallel region that are not assigned to a section must wait at an implicit barrier at the end of a sections region until the sections threads have completed their work which significantly limits the scalability of such designs. In the following study of Mergesort and Quicksort, we will discuss how this limitation can be remedied to some degree by enabling and utilizing nested parallelism in the recursive algorithms.
 
-### 2.2 OpenMP `taska` pragma
+### 2.2 OpenMP `tasks` pragma
   OpenMP 3.0 introduced a new feature called tasking.  Tasking allows for the parallelization of applications where units of work are generated dynamically, such as in recursive structures or while loops, without having to rely on nested parallelism [3]. This simplifies the logic for the programmer as well as reduces the overhead inherent in creating multiple, nested, parallel regions [5]. Rather than organizing all tasks into their own groups like in sections, tasking allows for more unstructured parallelism, as when a task pragma is encountered by a thread in a parallel region, it is placed into a task queue and can be executed by a thread as soon  as one becomes available. The scheduling of tasks, which each contain the code to execute, the task data environment, and internal control variables, to threads, is handled by the OpenMP runtime system [6]. The initial creation of tasks is often handled by a single thread as will be shown in the discussion of the sorting implementations to follow. Synchronization between tasks is achieved using the taskwait pragma. This construct specifies a wait on the completion of child tasks generated since the beginning of the current task and allows for synchronization between dependent tasks[7].
 
 ## 3. Mergesort and Quicksort
