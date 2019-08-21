@@ -1,4 +1,5 @@
 # Exploiting Task-Level Parallelism with OpenMP on Shared Memory Systems
+### Author
 Andrew Vaillancourt
 ## Abstract
   OpenMP is a well known application programming interface for exploiting structured parallelism in computationally heavy applications on shared memory systems. However, as applications become more complex, the need for exploiting unstructured and dynamic parallelism increases. Prior to OpenMP 3.0 this task-level parallelism was expressed using the section model. OpenMP 3.0 introduced the tasking model which promised a more natural way of exploiting and expressing irregular algorithms. This paper examines the performance, scalability, and expressiveness of the two models through the implementation of the well-understood divide-and-conquer sorting algorithms Mergesort and Quicksort. 
@@ -56,7 +57,7 @@ void mergesort_parallel
   Although the tasking variation can be implemented without nested parallelism, (as tasks can simply be created and added to the task queue in each recursive call, with the parallel region declared outside the initial sort function call,) it was decided that the tasking and section models should first be compared under similar conditions to determine if the dynamic nature of task scheduling has any benefit.
 
 A parallel mergesort using OpenMP tasking looks like:
-```
+```c
 void mergesort_parallel(int a[], int n, temp[], int thrds, int thresh) {
   if (threads == 1) {
     mergesort_serial(a, n, temp, thresh);
