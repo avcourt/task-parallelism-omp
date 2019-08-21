@@ -8,6 +8,13 @@
 #include <sys/time.h>
 #endif
 
+
+/* Serial Mergesort
+ *
+ *  @author: ANDREW VAILLANCOURT
+ *  2019
+ */
+
 // Arrays size <= SMALL switches to insertion sort
 #define SMALL	64
 
