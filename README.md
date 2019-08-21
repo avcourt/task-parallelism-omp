@@ -1,6 +1,7 @@
 # Exploiting Task-Level Parallelism with OpenMP on Shared Memory Systems
 ### Author
 Andrew Vaillancourt
+
 ## Abstract
   OpenMP is a well known application programming interface for exploiting structured parallelism in computationally heavy applications on shared memory systems. However, as applications become more complex, the need for exploiting unstructured and dynamic parallelism increases. Prior to OpenMP 3.0 this task-level parallelism was expressed using the section model. OpenMP 3.0 introduced the tasking model which promised a more natural way of exploiting and expressing irregular algorithms. This paper examines the performance, scalability, and expressiveness of the two models through the implementation of the well-understood divide-and-conquer sorting algorithms Mergesort and Quicksort. 
     
@@ -114,6 +115,7 @@ Quicksort was run with three different implementations:
 It is important to remember that the depth checking is needed for the ability to run the nested sections versions, and that nesting the parallel regions is the only way to utilize more than 2 threads if using sections in the case of these sorting algorithms. Tasking needs no such checking to operate correctly.
 
 ## 5. Results
+
 As expected, Fig2.1 and 2.2 clearly show the
 scalability limitation of unnested sections for binary
 divide and conquer algorithms. Beyond two threads,
@@ -141,7 +143,17 @@ completed threads in the tasking model. Efficiency (fig
 2.3, 3.3) in all algorithms tapers off to a similar degree
 as the overhead of creating and managing more nested
 regions and thread scheduling becomes more costly.
-  
+
+### 5.3 Figures
+![Mergesort Ex. Time](img/2.1.png)
+![Mergesort Speedup](img/2.2.png)
+![Mergesort Efficiency](img/2.3.png)
+![Quicksort Ex. Time](img/3.1.png)
+![Quicksort Speedup](img/3.2.png)
+![Quicksort Efficiency](img/3.3.png)
+![Quicksort Tasking](img/3.4.png)
+
+
 ## 6. Conclusion
 Based on these results, it would appear that the
 addition of the tasking model is an improvement to
@@ -235,3 +247,32 @@ dev/profiling-openmp-studio-perf-2293555.html. [Accessed:
 Available: https://en.wikipedia.org/wiki/Merge_sort#/media/
 File:Merge_sort_algorithm_diagram.svg. [Accessed: 4- Apr-
 2019]
+
+
+## Code
+### Run
+
+`$ make`
+
+`$ ./<program-name> <array_size> <threshold> <num_threads>`
+
+Except for serial versions which do not have `<num_threads>`.
+
+
+### Scripts
+
+There are 2 included scripts:
+
+- `run-single-pgm-tests.sh`: runs tests for a single program only, specify which program manually in the script.
+
+- `clear-results.sh`: removes all test output files from results directories.
+
+
+### Clean
+
+`$ make clean`
+
+
+#### Other Codes
+
+The directory `other_codes` contains codes developed but not discussed in report.
