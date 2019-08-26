@@ -1,6 +1,6 @@
 # Exploiting Task-Level Parallelism with OpenMP on Shared Memory Systems
 ### Author
-Andrew Vaillancourt
+**Andrew Vaillancourt**
 
 ## Table of Contents
 - [Abstract](#abstract)
