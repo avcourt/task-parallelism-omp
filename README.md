@@ -24,6 +24,7 @@
   * [Scripts](#scripts)
   * [Clean](#clean)
     + [Other Codes](#other-codes)
+- [License](#license)
 
 ## Abstract
   OpenMP is a well known application programming interface for exploiting structured parallelism in computationally heavy applications on shared memory systems. However, as applications become more complex, the need for exploiting unstructured and dynamic parallelism increases. Prior to OpenMP 3.0 this task-level parallelism was expressed using the section model. OpenMP 3.0 introduced the tasking model which promised a more natural way of exploiting and expressing irregular algorithms. This paper examines the performance, scalability, and expressiveness of the two models through the implementation of the well-understood divide-and-conquer sorting algorithms Mergesort and Quicksort. 
@@ -299,3 +300,7 @@ There are 2 included scripts:
 #### Other Codes
 
 The directory `other_codes` contains codes developed but not discussed in report.
+
+## License
+MIT
+
