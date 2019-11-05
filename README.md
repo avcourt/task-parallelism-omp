@@ -121,7 +121,7 @@ void par_quick_sort (int n, int *data, int low_limit) {
   Note the two separate functions. The main function will call par_quick_sort() which creates a single parallel region and has a single thread call quick_sort() which then generates the initial tasks. These tasks then generate  child tasks  recursively until the list is sorted. See how nested parallelism is not a requirement to achieve  full thread utilization. A single parallel region is created with all available system threads and tasks wil be assigned to the threads as they are created. Since the sort is done in place, each task or section needs its own copy of the data which is why the firstprivate clause is used. 
 
 ## 4. Experimental Setup
-  All experiments were run with the same array of 230 random integers on an AMD Ryzen 7-1700 8-core machine with 16 available hardware threads.
+  All experiments were run with the same array of 2^30 random integers on an AMD Ryzen 7-1700 8-core machine with 16 available hardware threads.
 ### 4.1 Implementation Discussion
   Mergesort uses a partition size threshold of 32 for switching to insertion sort, with depth checking to determine when to switch to serial mergesort. Quicksort’s threshold was used only to determine when to switch to serial quicksort. This paper is interested only in the comparison of tasking vs sections under similar algorithms, rather than a comparison of the 2 sorting algorithms themselves. Performance results presented here are meant as a preliminary analysis of the performance of the 2 models under 2 different divide-and-conquer scenarios, balanced and unbalanced partitioning. Future work will add more variations to the implementations for deeper analysis.
 
