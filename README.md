@@ -126,15 +126,16 @@ void par_quick_sort (int n, int *data, int low_limit) {
   Mergesort uses a partition size threshold of 32 for switching to insertion sort, with depth checking to determine when to switch to serial mergesort. Quicksort’s threshold was used only to determine when to switch to serial quicksort. This paper is interested only in the comparison of tasking vs sections under similar algorithms, rather than a comparison of the 2 sorting algorithms themselves. Performance results presented here are meant as a preliminary analysis of the performance of the 2 models under 2 different divide-and-conquer scenarios, balanced and unbalanced partitioning. Future work will add more variations to the implementations for deeper analysis.
 
 Mergesort was run with four different implementations:
-• Sections: no nesting of parallel regions – only utilizes 2 threads as described previously
-• Sections: nested parallel regions – with depth checking to limit depth.
-• Tasking: nested parallel regions – with depth check
-• Tasking: no nesting – with depth check to limit task levels
+- Sections: no nesting of parallel regions – only utilizes 2 threads as described previously
+- Sections: nested parallel regions – with depth checking to limit depth.
+- Tasking: nested parallel regions – with depth check
+- Tasking: no nesting – with depth check to limit task levels
 
 Quicksort was run with three different implementations:
-• Sections: no nesting of parallel regions – only utilizes 2 threads as described previously.
-• Sections: nested parallel regions – with depth checking to limit depth, but allow for utilization of all hardware threads.
-• Tasking: no nesting – no depth checking. This is the most natural way of expressing Quicksort via the OpenMP tasking model and makes for the simplest programming logic out of the three different implementations.
+- Sections: no nesting of parallel regions – only utilizes 2 threads as described previously.
+- Sections: nested parallel regions – with depth checking to limit depth, but allow for utilization of all hardware threads.
+- Tasking: no nesting – no depth checking
+  - This is the most natural way of expressing Quicksort via the OpenMP tasking model and makes for the simplest programming logic out of the three different implementations.
 
 It is important to remember that the depth checking is needed for the ability to run the nested sections versions, and that nesting the parallel regions is the only way to utilize more than 2 threads if using sections in the case of these sorting algorithms. Tasking needs no such checking to operate correctly.
 
